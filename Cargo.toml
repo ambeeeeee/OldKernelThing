@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "kernel",
+    "kernel/memory",
+    "builder",
+    "driver/*"
+]
+
+[workspace.metadata.kernel-builder]
+package-name = "kernel"
