@@ -72,4 +72,35 @@ impl VGADriver for VgaEfi {
             _ => unimplemented!(),
         }
     }
+
+    fn get_pixel(&self, x: usize, y: usize) -> Option<Pixel> {
+        if x > self.width || y > self.height {
+            return None;
+        }
+
+        let buffer = unsafe { &mut *self.buffer };
+
+        let pixel_base = (x + (y * self.stride)) * self.per_px;
+
+        Some(match self.format {
+            PixelFormat::RGB => {
+                Pixel {
+                    red: buffer[pixel_base + 0],
+                    green: buffer[pixel_base + 1],
+                    blue: buffer[pixel_base + 2]
+                }
+            }
+            PixelFormat::BGR => {
+                Pixel {
+                    blue: buffer[pixel_base + 0],
+                    green: buffer[pixel_base + 1],
+                    red: buffer[pixel_base + 2]
+                }
+            }
+            PixelFormat::U8 => {
+                todo!()
+            }
+            _ => unimplemented!(),
+        })
+    }
 }

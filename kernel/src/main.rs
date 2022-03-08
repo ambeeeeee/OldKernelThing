@@ -7,7 +7,10 @@ extern crate alloc;
 use core::{fmt::Write, panic::PanicInfo};
 
 use acpi::AcpiTables;
+use alloc::{format, vec};
 use bootloader::{entry_point, BootInfo};
+use colors::OwoColorize;
+use console_vga::{AnsiConsoleDriver, FormattedChar, RawConsoleDriver};
 use kernel::{
     acpi::{get_acpi_tables, ACPI_TABLES},
     console::setup_console,
@@ -16,6 +19,7 @@ use kernel::{
     idt, serial_println,
 };
 use kernel_memory::{allocator::init_heap, init_allocator, with_mapper_and_allocator};
+use palette::Srgb;
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
@@ -59,6 +63,17 @@ fn kmain(boot_info: &'static mut BootInfo) -> ! {
     serial_println!("[COMPLETE]");
 
     writeln!(&mut console, "Graphics Initialized").unwrap();
+
+    AnsiConsoleDriver::write_str(
+        &mut console,
+        &format!(
+            "{}{}{}{}",
+            "Hello".red().on_white(),
+            " ".on_white(),
+            "Name".cyan().on_white(),
+            "!".green().on_white()
+        ),
+    );
 
     loop {}
 }

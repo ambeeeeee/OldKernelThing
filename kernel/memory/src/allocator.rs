@@ -13,7 +13,7 @@ static ALLOCATOR: LockedHeap = LockedHeap::empty();
 // Define a heap for the kernel
 // Currently it is a fixed size of 100 KiB
 pub const HEAP_START: usize = 0x_4444_4444_0000;
-pub const HEAP_SIZE: usize = 900 * 1024;
+pub const HEAP_SIZE: usize = 9000 * 1024;
 
 /// Initializes the kernel heap
 pub fn init_heap(

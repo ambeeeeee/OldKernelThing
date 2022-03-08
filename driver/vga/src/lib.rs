@@ -7,6 +7,7 @@ pub trait VGADriver {
     fn shift_vertical(&self, pixels: usize);
 
     fn set_pixel(&self, x: usize, y: usize, value: Pixel);
+    fn get_pixel(&self, x: usize, y: usize) -> Option<Pixel>;
 }
 
 pub struct Pixel {
